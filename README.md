@@ -19,6 +19,7 @@ Scan the fingerprint of your user with the TouchID sensor (iPhone 5S).
 * Compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman).
 * Minimum iOS version is 8 (error callbacks will be gracefully invoked on lower versions).
 * Requires a fingerprint scanner, so an iPhone 5S or newer is required.
+* If authentication is locked (too many wront authentication attempts) the decives passcode mask is used to unlock touchID
 
 ## 2. Screenshot
 Distorted a bit because I created it back when Apple had not yet released the SDK and they're not a fan of developers posting screenshots of unreleased features.
