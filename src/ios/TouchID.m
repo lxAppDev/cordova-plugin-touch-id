@@ -8,6 +8,7 @@ static NSString *const FingerprintDatabaseStateKey = @"FingerprintDatabaseStateK
 // These two combined need to be unique, so one can be fixed
 NSString *keychainItemIdentifier = @"TouchIDKey";
 NSString *keychainItemServiceName;
+// LAPolicyDeviceOwnerAuthentication prioritizes Fingerprint, Passcode will be used if Fingerprint is not available (Lockout, or no hardware)
 LAPolicy authPolicy = LAPolicyDeviceOwnerAuthentication;
 
 - (void) isAvailable:(CDVInvokedUrlCommand*)command {
@@ -21,7 +22,8 @@ LAPolicy authPolicy = LAPolicyDeviceOwnerAuthentication;
 
     NSError *error = nil;
     LAContext *laContext = [[LAContext alloc] init];
-
+    // Check Fingerprint
+    // Check Passcode if Fingerprint is locked out (Fingerprint is available if we have LAErrorTouchIDLockout, so we are good to go
     if ([laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK]
                                   callbackId:command.callbackId];
