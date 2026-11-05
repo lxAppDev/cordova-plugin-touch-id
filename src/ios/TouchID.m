@@ -85,10 +85,11 @@ LAPolicy authPolicy = LAPolicyDeviceOwnerAuthentication;
 
   [self.commandDelegate runInBackground:^{
 
-    if (keychainItemServiceName == nil) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
       NSString *bundleID = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
       keychainItemServiceName = [bundleID stringByAppendingString:@".TouchIDPlugin"];
-    }
+    });
 
     if (![self createKeyChainEntry]) {
       NSLog(@"Keychain trouble. Falling back to verifyFingerprintWithCustomPasswordFallback.");
